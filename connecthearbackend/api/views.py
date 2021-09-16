@@ -14,6 +14,7 @@ from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.core.files.storage import FileSystemStorage
 from django.shortcuts import get_object_or_404, render
 # Create your views here.
 
@@ -133,11 +134,13 @@ class UploadView(APIView):
                 memberID = csvrow['id']
                 user = User.objects.filter(memberID=memberID).first()
                 if user:
-                    user.point = csvrow['point']
-                    user.daypoint = csvrow['daypoint']
-                    user.weekpoint = csvrow['weekpoint']
-                    user.monthpoint = csvrow['monthpoint']
+                    user.point =csvrow[column[7]]
+                    user.daypoint = csvrow[column[8]]
+                    user.weekpoint =  csvrow[column[9]]
+                    user.monthpoint = csvrow[column[10]]
                     user.lastdate = lastdate,
+                    user.student_id = csvrow[column[3]],
+                    user.country = csvrow[column[4]],
                     user.save()
             response = {
                 'status code' : status.HTTP_200_OK,
@@ -158,6 +161,7 @@ class Account(APIView):
         status_code = status.HTTP_200_OK
         data = {
             'name':user.name,
+            'email':user.email,
             'memberID': user.memberID,
             'academy':user.academy,
             'user_id':user.user_id,
@@ -166,7 +170,10 @@ class Account(APIView):
             'daypoint':user.daypoint,
             'weekpoint':user.weekpoint,
             'monthpoint':user.monthpoint,
-            'lastdate':user.lastdate
+            'student_id':user.student_id,
+            'country':user.country,
+            'lastdate':user.lastdate,
+            'avatar':user.avatar
         }
         response = {
             'success':'True',
@@ -175,6 +182,45 @@ class Account(APIView):
         }
         return Response(response, status=status_code)
 
+
+class AccountUpdate(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        user = request.user
+        data = request.data
+        user.name=data['name']
+        user.email=data['email']
+        user.academy=data['academy']
+        user.student_id=data['student_id']
+        user.country=data['country']
+        user.walletaddress=data['walletaddress']
+        user.save()
+        status_code = status.HTTP_204_NO_CONTENT
+        response = {
+            'success':'True',
+            'status code': status_code,
+            'type':'Profile Update'
+        }
+        return Response(response, status=status_code)
+
+class AvatarUpdate(APIView):
+    permission_classes = (IsAuthenticated,)
+    def post(self, request):
+        user = request.user
+        avatarimgFile =  request.FILES.get('avatar', '')
+        fs = FileSystemStorage()
+        if(avatarimgFile):
+            filename = fs.save(avatarimgFile.name, avatarimgFile)
+            user.avatar = filename
+            user.save()
+        status_code = status.HTTP_204_NO_CONTENT
+        response = {
+            'success':'True',
+            'status code': status_code,
+            'type':'Profile Update'
+        }
+        return Response(response, status=status_code)
 
 class UserList(APIView):
     permission_classes = (IsAuthenticated,)
