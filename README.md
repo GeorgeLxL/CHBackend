@@ -41,7 +41,7 @@
 ### Database creation
 
     sudo mysql -u root -p
-    mysql > DROP DATABASE IF EXISTS connectheart;
-    mysql > CREATE DATABASE connectheart CHARACTER SET utf8;
-    mysql > CREATE USER 'connectheart_db_user'@'localhost' IDENTIFIED BY '1234abcd';
-    mysql > GRANT ALL PRIVILEGES ON connectheart.* TO 'connectheart_db_user'@'localhost';
+    mysql > DROP DATABASE IF EXISTS database_name;
+    mysql > CREATE DATABASE database_name CHARACTER SET utf8;
+    mysql > CREATE USER 'db_user_name'@'localhost' IDENTIFIED BY 'password';
+    mysql > GRANT ALL PRIVILEGES ON database_name.* TO 'db_user_name'@'localhost';
