@@ -3,7 +3,7 @@ from django.contrib.auth.models import update_last_login
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.conf import settings
-from connecthearbackend.api.models import User
+from connectheart.api.models import User
 
 
 class UserLoginSerializer(TokenObtainPairSerializer):

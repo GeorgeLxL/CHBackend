@@ -1,1 +1,1 @@
-web: gunicorn connecthearbackend.wsgi --log-file -
+web: gunicorn connectheart.wsgi --log-file -

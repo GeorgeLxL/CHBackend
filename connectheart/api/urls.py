@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.urls import path
-from connecthearbackend.api.views import  UserLoginView, UserRegistrationView, CurrencyView, AdminLoginView, UploadView, Account, UserList, AccountUpdate,AvatarUpdate
+from connectheart.api.views import  UserLoginView, UserRegistrationView, CurrencyView, AdminLoginView, UploadView, Account, UserList, AccountUpdate,AvatarUpdate
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView

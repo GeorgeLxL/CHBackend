@@ -2,13 +2,13 @@ from django.shortcuts import render
 from requests import Request, Session
 from rest_framework import permissions
 from rest_framework.views import APIView
-from connecthearbackend.settings import DATABASES, MEDIA_ROOT
+from connectheart.settings import DATABASES, MEDIA_ROOT
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from connecthearbackend.api.serializers import UserLoginSerializer, UserRegistrationSerializer, AdminLoginSerializer
-from connecthearbackend.api.models import User, PointHistory
+from connectheart.api.serializers import UserLoginSerializer, UserRegistrationSerializer, AdminLoginSerializer
+from connectheart.api.models import User, PointHistory
 from django.db.models import Q
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
