@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_swagger',
     'connectheart.api',
-    'anymail',
 ]
 
 MIDDLEWARE = [
